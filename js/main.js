@@ -1,6 +1,7 @@
 const container = document.querySelector('#carousel');
 const slides = container.querySelectorAll('.slide');
-const indicatorItems = document.querySelectorAll('.indicator')
+const indicatorsItems = document.querySelectorAll('.indicator')
+const indicatorsContainer = document.querySelector('#indicators-container')
 let currentSlide = 0;
 let slideInterval = setInterval(gotoNext, 2000);
 
@@ -17,10 +18,10 @@ function gotoNext() {
     
     function gotoNth(n) {
     slides[currentSlide].classList.toggle ('active');
-    indicatorItems[currentSlide].classList.toggle ('active');
+    indicatorsItems[currentSlide].classList.toggle ('active');
     currentSlide = (n + slides.length) % slides.length;
     slides[currentSlide].classList.toggle ('active');
-    indicatorItems[currentSlide].classList.toggle ('active');
+    indicatorsItems[currentSlide].classList.toggle ('active');
     }
 
 var playing = true;
@@ -60,5 +61,14 @@ pauseHandler();
 gotoPrev();
 };
 
+function indicateHandler(e) {
+const { target } = e
+if (target && target.classList.contains('indicator')) {
+    pauseHandler()
+    gotoNth(+target.getAttribute('data-slide-to'))
+}
+}
+
 previous.addEventListener('click', prevHandler)
 next.addEventListener('click', nextHandler)
+indicatorsContainer.addEventListener('click', indicateHandler)
