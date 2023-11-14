@@ -1,6 +1,8 @@
-var slides = document.querySelectorAll('.slide');
-var currentSlide = 0;
-var slideInterval = setInterval(gotoNext, 2000);
+const container = document.querySelector('#carousel');
+const slides = container.querySelectorAll('.slide');
+const indicatorItems = document.querySelectorAll('.indicator')
+let currentSlide = 0;
+let slideInterval = setInterval(gotoNext, 2000);
 
 const PLAY = '<img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-play-256.png">'
 const PAUSE = '<img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-pause-512.png">'
@@ -14,9 +16,11 @@ function gotoNext() {
     }
     
     function gotoNth(n) {
-    slides[currentSlide].className = 'slide';
+    slides[currentSlide].classList.toggle ('active');
+    indicatorItems[currentSlide].classList.toggle ('active');
     currentSlide = (n + slides.length) % slides.length;
-    slides[currentSlide].className = 'slide active';
+    slides[currentSlide].classList.toggle ('active');
+    indicatorItems[currentSlide].classList.toggle ('active');
     }
 
 var playing = true;
