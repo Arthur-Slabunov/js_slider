@@ -1,74 +1,101 @@
-const container = document.querySelector('#carousel');
-const slides = container.querySelectorAll('.slide');
-const indicatorsItems = document.querySelectorAll('.indicator')
-const indicatorsContainer = document.querySelector('#indicators-container')
-let currentSlide = 0;
-let slideInterval = setInterval(gotoNext, 2000);
+(function slider() {
 
-const PLAY = '<img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-play-256.png">'
-const PAUSE = '<img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-pause-512.png">'
-
-function gotoNext() {
-    gotoNth(currentSlide + 1);
+    const container = document.querySelector('#carousel');
+    const slides = container.querySelectorAll('.slide');
+    const pauseBtn = document.querySelector('#pause');
+    const indicatorsItems = document.querySelectorAll('.indicator')
+    const indicatorsContainer = document.querySelector('#indicators-container')
+    let currentSlide = 0;
+    let slideInterval = setInterval(gotoNext, 2000);
+    
+    const CODE_ARROW_LEFT = 'ArrowLeft'
+    const CODE_ARROW_RIGHT = 'ArrowRight'
+    const CODE_ARROW_SPACE = 'Space'
+    const SLIDES_COUNT = slides.length
+    const PLAY = '<img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-play-256.png">'
+    const PAUSE = '<img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-pause-512.png">'
+    
+    function gotoNext() {
+        gotoNth(currentSlide + 1);
+        }
+        
+        function gotoPrev() {
+        gotoNth(currentSlide - 1);
+        }
+        
+        function gotoNth(n) {
+        slides[currentSlide].classList.toggle ('active');
+        indicatorsItems[currentSlide].classList.toggle ('active');
+        currentSlide = (n + SLIDES_COUNT) % SLIDES_COUNT;
+        slides[currentSlide].classList.toggle ('active');
+        indicatorsItems[currentSlide].classList.toggle ('active');
+        }
+    
+    var playing = true;
+    
+    function pauseHandler() {
+        pauseBtn.innerHTML = PLAY;
+        playing = false;
+        clearInterval(slideInterval);
     }
     
-    function gotoPrev() {
-    gotoNth(currentSlide - 1);
+    function playHandler() {
+        pauseBtn.innerHTML = PAUSE;
+        playing = true;
+        slideInterval = setInterval(gotoNext, 2000);
     }
     
-    function gotoNth(n) {
-    slides[currentSlide].classList.toggle ('active');
-    indicatorsItems[currentSlide].classList.toggle ('active');
-    currentSlide = (n + slides.length) % slides.length;
-    slides[currentSlide].classList.toggle ('active');
-    indicatorsItems[currentSlide].classList.toggle ('active');
+    function pauseButton() {
+        if (playing) {
+              pauseHandler();
+        } else {
+              playHandler();
+          }
+    };
+    
+    
+    let next = document.querySelector('#next');
+    let previous = document.querySelector('#previous');
+    let pause = document.querySelector('#pause')
+    
+    function nextHandler() {
+    pauseHandler();
+    gotoNext();
+    };
+    
+    function prevHandler() {
+    pauseHandler();
+    gotoPrev();
+    };
+    
+    function indicateHandler(e) {
+    const { target } = e
+    if (target && target.classList.contains('indicator')) {
+        pauseHandler()
+        gotoNth(+target.dataset.slideTo)
+    }
+    }
+    
+    function pressKey(e) {
+        const { code } = e
+        e.preventDefault()
+    
+        if (code === CODE_ARROW_LEFT) prevHandler()
+        if (code === CODE_ARROW_RIGHT) nextHandler()
+        if (code === CODE_ARROW_SPACE) pauseButton()
     }
 
-var playing = true;
-var pauseButton = document.querySelector('#pause');
-
-function pauseHandler() {
-    pauseButton.innerHTML = PLAY;
-    playing = false;
-    clearInterval(slideInterval);
+    function initListeners() {
+    pause.addEventListener('click', pauseButton)
+    previous.addEventListener('click', prevHandler)
+    next.addEventListener('click', nextHandler)
+    indicatorsContainer.addEventListener('click', indicateHandler)
+    document.addEventListener('keydown', pressKey)
+    }
+    
+function init() {
+    initListeners()
 }
 
-function playHandler() {
-    pauseButton.innerHTML = PAUSE;
-    playing = true;
-    slideInterval = setInterval(gotoNext, 2000);
-}
-
-pauseButton.onclick = function() {
-    if (playing) {
-  	    pauseHandler();
-    } else {
-  	    playHandler();
-	  }
-};
-
-
-let next = document.querySelector('#next');
-let previous = document.querySelector('#previous');
-
-function nextHandler() {
-pauseHandler();
-gotoNext();
-};
-
-function prevHandler() {
-pauseHandler();
-gotoPrev();
-};
-
-function indicateHandler(e) {
-const { target } = e
-if (target && target.classList.contains('indicator')) {
-    pauseHandler()
-    gotoNth(+target.getAttribute('data-slide-to'))
-}
-}
-
-previous.addEventListener('click', prevHandler)
-next.addEventListener('click', nextHandler)
-indicatorsContainer.addEventListener('click', indicateHandler)
+init()
+}())
