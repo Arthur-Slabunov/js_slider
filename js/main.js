@@ -7,6 +7,8 @@
     const indicatorsContainer = document.querySelector('#indicators-container')
     let currentSlide = 0;
     let slideInterval = setInterval(gotoNext, 2000);
+    let startPosX = null
+    let endPosX = null
     
     const CODE_ARROW_LEFT = 'ArrowLeft'
     const CODE_ARROW_RIGHT = 'ArrowRight'
@@ -85,11 +87,31 @@
         if (code === CODE_ARROW_SPACE) pauseButton()
     }
 
+    function swipeStart(e) {
+        startPosX = e instanceof MouseEvent
+        ? e.pageX
+        : e.changedTouches[0].pageX
+
+    }
+
+    function swipeEnd(e) {
+        endPosX = e instanceof MouseEvent 
+        ? e.pageX
+        : e.changedTouches[0].pageX
+
+        if (endPosX - startPosX > 100) prevHandler()
+        if (endPosX - startPosX < -100) nextHandler()
+    }
+
     function initListeners() {
     pause.addEventListener('click', pauseButton)
     previous.addEventListener('click', prevHandler)
     next.addEventListener('click', nextHandler)
     indicatorsContainer.addEventListener('click', indicateHandler)
+    container.addEventListener('touchstart', swipeStart)
+    container.addEventListener('mousedown', swipeStart)
+    container.addEventListener('touchend', swipeEnd)
+    container.addEventListener('mouseup', swipeEnd)
     document.addEventListener('keydown', pressKey)
     }
     
