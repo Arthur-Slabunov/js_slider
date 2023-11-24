@@ -5,8 +5,6 @@ Carousel.prototype = {
         _initProps() {
             this.container = document.querySelector('#carousel');
             this.slides = this.container.querySelectorAll('.slide');   
-            this.indicatorItems = this.container.querySelectorAll('.indicator')
-            this.indicatorsContainer = this.container.querySelector('#indicators-container')
             this.pauseHandler = this.container.querySelector('#pause')    
             this.currentSlide = 0;
             this.playing = true;
@@ -42,7 +40,26 @@ Carousel.prototype = {
     this.previous = this.container.querySelector('#previous');
     this.next = this.container.querySelector('#next');
     },
+ 
+    _InitIndicators() {
+         const indicators = document.createElement('div')
 
+         indicators.setAttribute('id', "indicators-container")
+         indicators.setAttribute('class', "indicators")
+
+         for (let i = 0; i < this.SLIDES_COUNT; i++) {
+                     
+         const indicator = document.createElement('span')
+         indicator.setAttribute('class', i ? 'indicator ' : 'indicator active')
+         indicator.dataset.slideTo = i
+         indicators.append(indicator)
+         }
+
+         this.container.append(indicators)
+
+         this.indicatorItems = this.container.querySelectorAll('.indicator')
+         this.indicatorsContainer = this.container.querySelector('#indicators-container')
+    },
     
     _initListeners() {
         this.pauseBtn.addEventListener('click', this.pauseButton.bind(this))
@@ -123,6 +140,7 @@ Carousel.prototype = {
  init() {
     this._initProps()
     this._initControls()
+    this._InitIndicators()
     this._initListeners()
     this._tick()
 },
