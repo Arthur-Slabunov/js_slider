@@ -5,7 +5,8 @@ these make the slideshow work
 
 .slides {
     position: relative;
-    height: 150px;
+    height: 450px;
+    width: 700px;
     padding: 0px;
     margin: 0px;
     list-style-type: none;
@@ -33,7 +34,6 @@ just for appearance; change whatever you want
 */
 
 .slide {
-    font-size: 40px;
     padding: 40px;
     box-sizing: border-box;
     background: #333;
@@ -41,23 +41,23 @@ just for appearance; change whatever you want
 }
 
 .slide:nth-of-type(1) {
-    background: red;
+    background-image: url(https://wallpaperset.com/w/full/3/0/f/120853.jpg)
 }
 
 .slide:nth-of-type(2) {
-    background: orange;
+    background-image: url(https://wallpapers.com/images/featured/nature-2ygv7ssy2k0lxlzu.jpg)
 }
 
 .slide:nth-of-type(3) {
-    background: green;
+    background-image: url(https://wallpapercave.com/wp/ixmt8JQ.jpg);
 }
 
 .slide:nth-of-type(4) {
-    background: blue;
+    background-image: url(https://cdn.wallpapersafari.com/83/37/2sA69f.jpg);
 }
 
 .slide:nth-of-type(5) {
-    background: purple;
+    background-image: url(https://wallpapermemory.com/uploads/456/moraine-lake-wallpaper-full-hd-128727.jpg);
 }
 
 body {
