@@ -6,6 +6,7 @@ class SwipeCarousel extends Carousel {
         super(...args)
         this.itemContainer = this.slides[0].parentElement
     }
+
     _initListeners() {
         super._initListeners()
         this.container.addEventListener('touchstart', this._swipeStart.bind(this))
@@ -29,7 +30,6 @@ class SwipeCarousel extends Carousel {
         if (this.endPosX - this.startPosX > 100) this.prevHandler()
         if (this.endPosX - this.startPosX < -100) this.nextHandler()
     }
-
 }
 
 export default SwipeCarousel

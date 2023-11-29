@@ -69,14 +69,12 @@ just for appearance; change whatever you want
     background-size: 100% 100%;
 }
 
-
 html,
 body {
     padding: 20px 0 0 0;
     margin: 0;
     overflow-x: hidden;
 }
-
 
 body {
     font-family: Arial, Helvetica, sans-serif;
@@ -110,7 +108,6 @@ body {
     transition: ease-out 0.5s;
 
 }
-
 
 .control img {
     height: 40px;
