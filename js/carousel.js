@@ -23,8 +23,6 @@ Carousel.prototype = {
         this.NEXT_PIC = '<img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-arrow-right-a-256.png">'
     },
 
-    // ...
-
     _initControls() {
         const controlsContainer = document.createElement('div');
         controlsContainer.setAttribute('id', 'controls-container');
@@ -60,7 +58,6 @@ Carousel.prototype = {
         this.indicatorsContainer = indicatorsContainer;
     },
 
-
     _initListeners() {
         this.pauseBtn.addEventListener('click', this.pauseButton.bind(this))
         this.previous.addEventListener('click', this.prevHandler.bind(this))
@@ -68,7 +65,6 @@ Carousel.prototype = {
         this.indicatorsContainer.addEventListener('click', this._indicateHandler.bind(this))
         document.addEventListener('keydown', this._pressKey.bind(this))
     },
-
 
     _gotoNth(n) {
         this.slides[this.currentSlide].classList.toggle('active');
@@ -89,9 +85,6 @@ Carousel.prototype = {
         this.timerID = setInterval(this._gotoNext.bind(this), this.INTERVAL);
     },
 
-
-
-
     pause() {
         clearInterval(this.timerID);
         this.pauseBtn.innerHTML = this.PLAY_PIC;
@@ -108,7 +101,6 @@ Carousel.prototype = {
         if (this.playing) this.pause()
         else this.play()
     },
-
 
     nextHandler() {
         this.pause();

@@ -13,8 +13,6 @@ SwipeCarousel.prototype._initListeners = function () {
     this.container.addEventListener('mouseup', this._swipeEnd.bind(this))
 }
 
-
-
 SwipeCarousel.prototype._swipeStart = function (e) {
     this.startPosX = e instanceof MouseEvent
         ? e.pageX
