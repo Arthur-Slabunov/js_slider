@@ -59,7 +59,6 @@
         }
     };
 
-
     let next = document.querySelector('#next');
     let previous = document.querySelector('#previous');
     let pause = document.querySelector('#pause')
